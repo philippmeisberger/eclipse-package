@@ -1,0 +1,16 @@
+Source: ECLIPSE
+Priority: extra
+Maintainer: MAINTAINER_NAME <MAINTAINER_MAIL>
+Build-Depends: debhelper (>= 9)
+Section: devel
+Standards-Version: 3.9.6
+Homepage: https://www.eclipse.org
+
+Package: ECLIPSE
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, default-jre
+Description: Eclipse Desktop IDE
+ Eclipse is famous for our Java Integrated Development Environment (IDE), but
+ our C/C++ IDE and PHP IDE are pretty cool too. You can easily combine language
+ support and other features into any of our default packages, and the Eclipse
+ Marketplace allows for virtually unlimited customization and extension.

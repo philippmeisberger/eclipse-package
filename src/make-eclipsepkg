@@ -1,0 +1,127 @@
+#!/bin/sh
+
+VERSION='1.0'
+
+## Parse optional arguments
+if [ "${1}" = "--version" ]; then
+    echo "$(basename "${0}") ${VERSION}"
+    exit 0
+elif [ "${1}" = "--help" ]; then
+    echo "Usage: $(basename "${0}") [OPTION] FILE"
+    echo ""
+    echo "Builds Debian package from Eclipse binary distribution"
+    echo ""
+    echo "Options:"
+    echo ""
+    echo "--help       Display this help message and exit"
+    echo "--version    Print version information and exit"
+    exit 0
+fi
+
+## Parse FILE argument
+if [ -z "${1}" ]; then
+    echo "Error: Missing FILE argument!"
+    exit 1
+elif [ ! -e "${1}" ]; then
+    echo "Error: The file \"${1}\" does not exist!"
+    exit 1
+elif [ ! -r "${1}" ]; then
+    echo "Error: The file \"${1}\" is not readable!"
+    exit 1
+fi
+
+## Try to use environment variable TMPDIR
+if [ -z "${TMPDIR}" ]; then
+    TEMP_DIR="/tmp"
+else
+    TEMP_DIR="${TMPDIR}"
+fi
+
+PACKAGE_ROOT_DIR="${TEMP_DIR}/eclipse-package"
+PACKAGE_LIB_DIR="${PACKAGE_ROOT_DIR}/usr/lib"
+CURRENT_DIR=$(pwd)
+
+## Extract Eclipse edition
+ECLIPSE="$(basename "${1}" | cut -d '-' -f 1-2)"
+
+## Extract archive in "lib" directory
+mkdir -p "${PACKAGE_LIB_DIR}"
+tar -v -C "${PACKAGE_LIB_DIR}" -xf "${1}"
+mv "${PACKAGE_LIB_DIR}/eclipse/" "${PACKAGE_LIB_DIR}/${ECLIPSE}"
+
+## Copy Debian package files
+mkdir "${PACKAGE_ROOT_DIR}/debian/"
+cp -R /usr/share/eclipse-package/debian "${PACKAGE_ROOT_DIR}"
+mv "${PACKAGE_LIB_DIR}/${ECLIPSE}/icon.xpm" "${PACKAGE_LIB_DIR}/${ECLIPSE}/${ECLIPSE}.xpm"
+
+cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.desktop"
+[Desktop Entry]
+Type=Application
+Name=Eclipse
+Exec=/usr/lib/${ECLIPSE}/eclipse
+Icon=/usr/share/pixmaps/${ECLIPSE}.xpm
+Path=/usr/lib/${ECLIPSE}/
+Terminal=false
+StartupNotify=false
+Categories=Development;IDE;GTK;
+EOF
+
+cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.dirs"
+usr/bin
+usr/lib/${ECLIPSE}
+usr/share/pixmaps
+EOF
+
+cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.install"
+usr/lib/${ECLIPSE}
+usr/lib/${ECLIPSE}/${ECLIPSE}.xpm usr/share/pixmaps/
+debian/${ECLIPSE}.desktop usr/share/applications/
+EOF
+
+cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.links"
+usr/lib/${ECLIPSE}/eclipse usr/bin/${ECLIPSE}
+EOF
+
+cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.menu"
+?package(${ECLIPSE}):needs="X11" section="Applications/Programming" \\
+  title="Eclipse" command="/usr/bin/${ECLIPSE}" \\
+  icon="/usr/share/pixmaps/${ECLIPSE}.xmp"
+EOF
+
+## Insert package name in control file
+sed -i "s/ECLIPSE/${ECLIPSE}/g" ${PACKAGE_ROOT_DIR}/debian/control
+
+## Insert maintainer name in control file
+if [ -n "${DEBFULLNAME}" ]; then
+    MAINTAINER_NAME=${DEBFULLNAME}
+else
+    MAINTAINER_NAME="$(getent passwd $(whoami) | cut -d ':' -f 5 | cut -d, -f 1)"
+fi
+
+sed -i "s/MAINTAINER_NAME/${MAINTAINER_NAME}/" "${PACKAGE_ROOT_DIR}/debian/control"
+
+## Insert maintainer mail in control file
+if [ -n "${DEBEMAIL}" ]; then
+    MAINTAINER_MAIL=${DEBEMAIL}
+else
+    MAINTAINER_MAIL="$(whoami)@$(hostname --fqdn )"
+fi
+
+sed -i "s/MAINTAINER_MAIL/${MAINTAINER_MAIL}/" ${PACKAGE_ROOT_DIR}/debian/control
+
+## Read Eclipse version
+ECLIPSE_VERSION="$(xmllint --xpath 'string(//artifact[@classifier="osgi.bundle"][@id="org.eclipse.platform"]/@version)' "${PACKAGE_ROOT_DIR}/usr/lib/${ECLIPSE}/artifacts.xml")"
+
+## Create changelog
+cd ${PACKAGE_ROOT_DIR}
+dch --create --package "${ECLIPSE}" -v "${ECLIPSE_VERSION}" "This package was automatically created by eclipse-package ${VERSION}."
+dch --release ""
+
+## Build the package (binary only)
+fakeroot debian/rules binary
+mv ../eclipse*.deb "${CURRENT_DIR}/"
+
+## Clean up
+cd ..
+rm -rf "${PACKAGE_ROOT_DIR}"
+exit 0

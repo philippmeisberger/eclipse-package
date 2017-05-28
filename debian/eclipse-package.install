@@ -1,0 +1,2 @@
+src/make-eclipsepkg usr/bin/
+debian/templates/* usr/share/eclipse-package/debian/
