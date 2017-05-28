@@ -110,7 +110,7 @@ fi
 sed -i "s/MAINTAINER_MAIL/${MAINTAINER_MAIL}/" ${PACKAGE_ROOT_DIR}/debian/control
 
 ## Read Eclipse version
-ECLIPSE_VERSION="$(xmllint --xpath 'string(//artifact[@classifier="osgi.bundle"][@id="org.eclipse.platform"]/@version)' "${PACKAGE_ROOT_DIR}/usr/lib/${ECLIPSE}/artifacts.xml")"
+ECLIPSE_VERSION="$(xmllint --xpath 'string(//artifact[@classifier="osgi.bundle"][@id="org.eclipse.platform"]/@version)' "${PACKAGE_ROOT_DIR}/usr/lib/${ECLIPSE}/artifacts.xml" | cut -f 1-3 -d '.')"
 
 ## Create changelog
 cd ${PACKAGE_ROOT_DIR}
