@@ -8,7 +8,7 @@ Vcs-Git: https://github.com/philippmeisberger/android-studio-package.git
 
 Package: eclipse-package
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, fakeroot, make, devscripts, libxml2-utils (>= 2.7)
+Depends: ${shlibs:Depends}, ${misc:Depends}, fakeroot, make, devscripts
 Description: Utility for creating Eclipse Debian packages
  This package provides the capability to build a Debian package from
  an Eclipse binary distribution by running make-eclipsepkg <Eclipse archive file>.
