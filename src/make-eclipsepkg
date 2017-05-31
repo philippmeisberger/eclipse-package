@@ -43,6 +43,7 @@ CURRENT_DIR=$(pwd)
 
 ## Extract Eclipse edition
 ECLIPSE="$(basename "${1}" | cut -d '-' -f 1-2)"
+ECLIPSE_IDE="$(basename "${1}" | cut -d '-' -f 2 | tr '[:lower:]' '[:upper:]')"
 
 ## Extract archive in "lib" directory
 mkdir -p "${PACKAGE_LIB_DIR}"
@@ -57,7 +58,7 @@ mv "${PACKAGE_LIB_DIR}/${ECLIPSE}/icon.xpm" "${PACKAGE_LIB_DIR}/${ECLIPSE}/${ECL
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.desktop"
 [Desktop Entry]
 Type=Application
-Name=Eclipse
+Name=Eclipse ${ECLIPSE_IDE}
 Exec=/usr/lib/${ECLIPSE}/eclipse
 Icon=/usr/share/pixmaps/${ECLIPSE}.xpm
 Path=/usr/lib/${ECLIPSE}/
@@ -84,8 +85,8 @@ EOF
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.menu"
 ?package(${ECLIPSE}):needs="X11" section="Applications/Programming" \\
-  title="Eclipse" command="/usr/bin/${ECLIPSE}" \\
-  icon="/usr/share/pixmaps/${ECLIPSE}.xmp"
+  title="Eclipse ${ECLIPSE_IDE}" command="/usr/bin/${ECLIPSE}" \\
+  icon="/usr/share/pixmaps/${ECLIPSE}.xpm"
 EOF
 
 ## Insert package name in control file
