@@ -10,8 +10,8 @@ Package: eclipse-package
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, fakeroot, make, devscripts
 Description: Utility for creating Eclipse Debian packages
- This package provides the capability to build a Debian package from
- an Eclipse binary distribution by running make-eclipsepkg <Eclipse archive file>.
+ This package provides the capability to build a Debian package from an Eclipse
+ binary distribution by running make-eclipsepkg <Eclipse archive file>.
  .
  Download the archive file from
  https://www.eclipse.org/downloads/eclipse-packages/
