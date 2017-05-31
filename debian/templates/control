@@ -8,7 +8,7 @@ Homepage: https://www.eclipse.org
 
 Package: ECLIPSE
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, default-jre
+Depends: ${shlibs:Depends}, ${misc:Depends}, java-sdk | default-jdk | java-runtime | default-jre
 Description: Eclipse Desktop IDE
  Eclipse is famous for our Java Integrated Development Environment (IDE), but
  our C/C++ IDE and PHP IDE are pretty cool too. You can easily combine language
