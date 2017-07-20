@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Android Studio package
+Upstream-Name: Eclipse package
 Upstream-Contact: Philipp Meisberger <team@pm-codeworks.de>
-Source: https://github.com/philippmeisberger/
+Source: https://github.com/philippmeisberger/eclipse-package
 
 Files: *
 Copyright: Copyright (c) 2017 Philipp Meisberger <team@pm-codeworks.de>
