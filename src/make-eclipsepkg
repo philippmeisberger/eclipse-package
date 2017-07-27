@@ -59,7 +59,7 @@ cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.desktop"
 Type=Application
 Name=Eclipse ${ECLIPSE_IDE}
 Exec=${ECLIPSE}
-Icon=${ECLIPSE}.xpm
+Icon=${ECLIPSE}
 Terminal=false
 Categories=Development;IDE;GTK;
 EOF
