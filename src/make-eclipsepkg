@@ -53,7 +53,6 @@ mv "${PACKAGE_LIB_DIR}/eclipse/" "${PACKAGE_LIB_DIR}/${ECLIPSE}"
 ## Copy Debian package files
 mkdir "${PACKAGE_ROOT_DIR}/debian/"
 cp -R /usr/share/eclipse-package/debian "${PACKAGE_ROOT_DIR}"
-mv "${PACKAGE_LIB_DIR}/${ECLIPSE}/icon.xpm" "${PACKAGE_LIB_DIR}/${ECLIPSE}/${ECLIPSE}.xpm"
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.desktop"
 [Desktop Entry]
@@ -73,12 +72,12 @@ EOF
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.install"
 usr/lib/${ECLIPSE}
-usr/lib/${ECLIPSE}/${ECLIPSE}.xpm usr/share/pixmaps/
 debian/${ECLIPSE}.desktop usr/share/applications/
 EOF
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.links"
 usr/lib/${ECLIPSE}/eclipse usr/bin/${ECLIPSE}
+usr/lib/${ECLIPSE}/icon.xpm /usr/share/pixmaps/${ECLIPSE}.xpm
 EOF
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.menu"
