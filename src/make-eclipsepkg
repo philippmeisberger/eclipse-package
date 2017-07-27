@@ -59,11 +59,9 @@ cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.desktop"
 [Desktop Entry]
 Type=Application
 Name=Eclipse ${ECLIPSE_IDE}
-Exec=/usr/lib/${ECLIPSE}/eclipse
-Icon=/usr/share/pixmaps/${ECLIPSE}.xpm
-Path=/usr/lib/${ECLIPSE}/
+Exec=${ECLIPSE}
+Icon=${ECLIPSE}.xpm
 Terminal=false
-StartupNotify=false
 Categories=Development;IDE;GTK;
 EOF
 
@@ -84,8 +82,10 @@ usr/lib/${ECLIPSE}/eclipse usr/bin/${ECLIPSE}
 EOF
 
 cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.menu"
-?package(${ECLIPSE}):needs="X11" section="Applications/Programming" \\
-  title="Eclipse ${ECLIPSE_IDE}" command="/usr/bin/${ECLIPSE}" \\
+?package(${ECLIPSE}): needs="X11" \\
+  section="Applications/Programming" \\
+  title="Eclipse ${ECLIPSE_IDE}" \\
+  command="/usr/bin/${ECLIPSE}" \\
   icon="/usr/share/pixmaps/${ECLIPSE}.xpm"
 EOF
 
