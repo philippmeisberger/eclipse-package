@@ -1,5 +1,5 @@
-eclipse-package (1.0) UNRELEASED; urgency=medium
+eclipse-package (1.0) stable; urgency=medium
 
   * Initial release
 
- -- Philipp Meisberger <team@pm-codeworks.de>  Sun, 28 May 2017 09:40:26 +0200
+ -- Philipp Meisberger <team@pm-codeworks.de>  Mon, 02 Oct 2017 16:32:15 +0200
