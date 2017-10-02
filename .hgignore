@@ -6,3 +6,4 @@ syntax: glob
 **.deb
 **.build
 **.changes
+**.buildinfo
