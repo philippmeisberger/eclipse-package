@@ -80,14 +80,6 @@ usr/lib/${ECLIPSE}/eclipse usr/bin/${ECLIPSE}
 usr/lib/${ECLIPSE}/icon.xpm /usr/share/pixmaps/${ECLIPSE}.xpm
 EOF
 
-cat << EOF > "${PACKAGE_ROOT_DIR}/debian/${ECLIPSE}.menu"
-?package(${ECLIPSE}): needs="X11" \\
-  section="Applications/Programming" \\
-  title="Eclipse ${ECLIPSE_IDE}" \\
-  command="/usr/bin/${ECLIPSE}" \\
-  icon="/usr/share/pixmaps/${ECLIPSE}.xpm"
-EOF
-
 ## Insert package name in control file
 sed -i "s/ECLIPSE/${ECLIPSE}/g" ${PACKAGE_ROOT_DIR}/debian/control
 
