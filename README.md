@@ -1,6 +1,8 @@
 Eclipse Package
 ===============
 
+[![Build Status](https://travis-ci.org/philippmeisberger/eclipse-package.svg?branch=master)](https://travis-ci.org/philippmeisberger/eclipse-package)
+
 Utility to build Debian package from Eclipse binary distribution.
 
 Installation

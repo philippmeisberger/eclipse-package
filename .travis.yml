@@ -1,0 +1,27 @@
+language: bash
+sudo: required
+
+os:
+  - linux
+
+env:
+  global:
+    - ECLIPSE_VERSION=2018-09
+    - ECLIPSE_FILE=eclipse-java-${ECLIPSE_VERSION}-linux-gtk-x86_64.tar.gz
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y devscripts
+  - wget ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/${ECLIPSE_VERSION}/R/${ECLIPSE_FILE}
+
+install:
+  - dpkg-buildpackage -uc -us
+  - sudo dpkg -i ../eclipse-package*.deb
+
+script:
+  - make-eclipsepkg ${ECLIPSE_FILE}
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
