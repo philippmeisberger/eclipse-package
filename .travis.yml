@@ -11,14 +11,14 @@ env:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y debhelper devscripts
-  - wget ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/${ECLIPSE_VERSION}/R/${ECLIPSE_FILE}
+  - sudo apt-get install -y debhelper devscripts libsecret-1.0
 
 install:
   - dpkg-buildpackage -uc -us
   - sudo dpkg -i ../eclipse-package*.deb
 
 script:
+  - wget ftp.halifax.rwth-aachen.de/eclipse//technology/epp/downloads/release/${ECLIPSE_VERSION}/R/${ECLIPSE_FILE}
   - make-eclipsepkg ${ECLIPSE_FILE}
 
 notifications:
