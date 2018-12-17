@@ -111,7 +111,7 @@ dch --create --package "${ECLIPSE}" -v "${ECLIPSE_VERSION}" "This package was au
 dch --release ""
 
 ## Build the package (binary only)
-fakeroot debian/rules binary
+dpkg-buildpackage -b -uc -us
 mv ../eclipse*.deb "${CURRENT_DIR}/"
 
 ## Clean up
