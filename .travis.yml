@@ -1,9 +1,6 @@
 language: bash
 sudo: required
 
-os:
-  - linux
-
 env:
   global:
     - ECLIPSE_VERSION=2018-09
