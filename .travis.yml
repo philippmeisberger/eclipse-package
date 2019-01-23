@@ -3,8 +3,8 @@ sudo: required
 
 env:
   global:
-    - ECLIPSE_VERSION=2018-09
-    - ECLIPSE_FILE=eclipse-java-${ECLIPSE_VERSION}-linux-gtk-x86_64.tar.gz
+    - ECLIPSE_VERSION=2018-12
+    - ECLIPSE_FILE=eclipse-java-${ECLIPSE_VERSION}-R-linux-gtk-x86_64.tar.gz
 
 before_install:
   - sudo apt-get update
