@@ -6,7 +6,7 @@ make-eclipsepkg \- Builds Debian package from Eclipse binary distribution
 .SH SYNOPSIS
 .nf
 .fam C
-\fBmake-eclipsepkg\fP [\fIFILE\fR]
+\fBmake-eclipsepkg\fP [OPTIONS] [\fIFILE\fR]
 .fam T
 .fi
 
@@ -16,6 +16,15 @@ make-eclipsepkg \- Builds Debian package from Eclipse binary distribution
 Download an Eclipse package from \fBhttps://www.eclipse.org/downloads/packages\fP and execute \fBmake-eclipsepkg\fP \fIFILE\fR with the downloaded file. The Debian package is built in the current directory.
 .br
 The program requires about 500 MB free disk space in a temporary directory. The default directory is \fI/tmp\fR but you can change it by setting the environment variable \fITMPDIR\fR.
+
+.SH OPTIONS
+.TP
+\fB--version\fR
+Print version information and exit.
+
+.TP
+\fB--help\fR
+Display summary of options and exit.
 
 .SH EXAMPLE
 After you downloaded Eclipse IDE from the website you need just to invoke make-eclipsepkg to build the Debian package:
@@ -27,6 +36,19 @@ This generates a Debian package in the current directory. It takes some time! Af
     dpkg -i eclipse-cpp_4.4_amd64.deb
 
 When finished the Debian package and the downloaded .tar.gz file can be removed.
+
+.SH ENVIRONMENT
+.TP
+.SM TMPDIR
+Base directory used for temporary files (default is \fI/tmp\fR).
+
+.TP
+.SM DEBFULLNAME
+Full name used in the maintainer field of the package.
+
+.TP
+.SM DEBEMAIL
+E-Mail address used in the maintainer field of the package.
 
 .SH AUTHOR
 Philipp Meisberger <team@pm-codeworks.de>
